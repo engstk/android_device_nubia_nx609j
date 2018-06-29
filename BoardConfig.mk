@@ -56,6 +56,10 @@ BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_RAMDISK_OFFSET     := 0x01000000
 TARGET_PREBUILT_KERNEL := device/nubia/NX609J/kernel
 
+# Keymaster 3
+TARGET_HW_DISK_ENCRYPTION := true
+PLATFORM_SECURITY_PATCH := 2018-03-05
+
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
@@ -73,9 +77,6 @@ BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
-# Keymaster
-TARGET_HW_DISK_ENCRYPTION := true
-
 # TWRP Build Flags
 TW_THEME := portrait_hdpi
 BOARD_FIX_NUBIA_OTA := true
@@ -92,14 +93,18 @@ TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_NEW_ION_HEAP := true
 TW_NO_SCREEN_TIMEOUT := true
 TW_NO_USB_STORAGE := true
-TARGET_RECOVERY_DEVICE_MODULES := tzdata
-TW_RECOVERY_ADDITIONAL_RELINK_FILES := $(OUT)/system/usr/share/zoneinfo/tzdata
+TARGET_RECOVERY_DEVICE_MODULES := tzdata hwservicemanager ld-android android.hidl.base@1.0
+TW_RECOVERY_ADDITIONAL_RELINK_FILES := $(OUT)/system/usr/share/zoneinfo/tzdata $(OUT)/system/bin/hwservicemanager $(OUT)/system/lib64/ld-android.so $(OUT)/system/lib64/android.hidl.base@1.0.so
 
 # TWRP Debug Flags
 #TWRP_EVENT_LOGGING := true
 #TARGET_USES_LOGD := true
 #TWRP_INCLUDE_LOGCAT := true
+#TARGET_RECOVERY_DEVICE_MODULES += debuggerd
+#TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(OUT)/system/bin/debuggerd
 #TARGET_RECOVERY_DEVICE_MODULES += strace
 #TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(OUT)/system/xbin/strace
+#TW_CRYPTO_SYSTEM_VOLD_DEBUG := true
 #TARGET_RECOVERY_DEVICE_MODULES += twrpdec
 #TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(OUT)/recovery/root/sbin/twrpdec
+#TARGET_RECOVERY_DEVICE_MODULES += dump_footer
