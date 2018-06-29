@@ -1,6 +1,6 @@
 /cache          ext4        /dev/block/bootdevice/by-name/cache
 /system         ext4        /dev/block/bootdevice/by-name/system
-/vendor         ext4        /dev/block/bootdevice/by-name/vendor			flags=mounttodecrypt
+/vendor         ext4        /dev/block/bootdevice/by-name/vendor
 /data           f2fs        /dev/block/bootdevice/by-name/userdata          flags=fsflags=nosuid,nodev,noatime,inline_xattr;length=-16384
 /boot           emmc        /dev/block/bootdevice/by-name/boot
 /recovery       emmc        /dev/block/bootdevice/by-name/recovery 			flags=display="Recovery"
