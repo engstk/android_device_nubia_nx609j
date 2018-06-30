@@ -58,6 +58,7 @@ TARGET_PREBUILT_KERNEL := device/nubia/NX609J/kernel
 
 # Keymaster 3
 TARGET_HW_DISK_ENCRYPTION := true
+PLATFORM_VERSION := 8.1.0
 PLATFORM_SECURITY_PATCH := 2018-03-05
 
 # Partitions
@@ -95,6 +96,10 @@ TW_NO_SCREEN_TIMEOUT := true
 TW_NO_USB_STORAGE := true
 TARGET_RECOVERY_DEVICE_MODULES := tzdata hwservicemanager ld-android android.hidl.base@1.0
 TW_RECOVERY_ADDITIONAL_RELINK_FILES := $(OUT)/system/usr/share/zoneinfo/tzdata $(OUT)/system/bin/hwservicemanager $(OUT)/system/lib64/ld-android.so $(OUT)/system/lib64/android.hidl.base@1.0.so
+
+# Additional modules and relink files for resetprop
+TARGET_RECOVERY_DEVICE_MODULES += libsqlite libicuuc libicui18n
+TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(OUT)/system/lib64/libsqlite.so $(OUT)/system/lib64/libicuuc.so $(OUT)/system/lib64/libicui18n.so
 
 # TWRP Debug Flags
 #TWRP_EVENT_LOGGING := true
