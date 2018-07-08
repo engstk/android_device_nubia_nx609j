@@ -1,0 +1,89 @@
+# blu_spark extras
+
+on init
+    # Enable charging LED
+    write /sys/class/leds/red/trigger "battery-charging"
+    write /sys/class/leds/green/trigger "battery-full"
+
+    # Update foreground and background cpusets
+    write /dev/cpuset/foreground/cpus 0-7
+    write /dev/cpuset/foreground/boost/cpus 0-7
+    write /dev/cpuset/background/cpus 0-7
+    write /dev/cpuset/system-background/cpus 0-7
+    write /dev/cpuset/top-app/cpus 0-7
+
+    # Enable sched boost
+	write /proc/sys/kernel/sched_boost 1
+
+on property:sys.post_boot.parsed=1
+    # Tweak IO performance after boot complete
+    write /sys/block/dm-0/queue/scheduler "zen"
+    write /sys/block/dm-1/queue/scheduler "zen"
+    write /sys/block/sda/queue/scheduler "zen"
+    write /sys/block/sde/queue/scheduler "zen"
+    write /sys/block/dm-0/queue/read_ahead_kb 128
+	write /sys/block/dm-0/queue/iostats 1
+	write /sys/block/dm-0/queue/nr_requests 128
+    write /sys/block/dm-1/queue/read_ahead_kb 128
+	write /sys/block/dm-1/queue/iostats 1
+	write /sys/block/dm-1/queue/nr_requests 128
+    write /sys/block/sda/queue/read_ahead_kb 128
+	write /sys/block/sda/queue/iostats 1
+	write /sys/block/sda/queue/nr_requests 128
+    write /sys/block/sde/queue/read_ahead_kb 128
+	write /sys/block/sde/queue/iostats 1
+	write /sys/block/sde/queue/nr_requests 128
+
+    # Disable Adaptive LMK
+    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 0
+
+	# Disable thermal hotplug to switch governor
+	write /sys/module/msm_thermal/core_control/enabled 0
+    write /sys/devices/soc/soc:qcom,bcl/mode "disable"
+    write /sys/devices/soc/soc:qcom,bcl/hotplug_mask 0
+    write /sys/devices/soc/soc:qcom,bcl/hotplug_soc_mask 0
+    write /sys/devices/soc/soc:qcom,bcl/mode "enable"
+
+    # Input boost and stune configuration
+    write /sys/module/cpu_boost/parameters/input_boost_freq "0:1036800 1:0 2:0 3:0 4:0 5:0 6:0 7:0"
+    write /sys/module/cpu_boost/parameters/input_boost_ms 500
+	write /sys/module/cpu_boost/parameters/dynamic_stune_boost 15
+
+    # Configure governor settings for little cluster
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "blu_active"
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/above_hispeed_delay 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/go_hispeed_load 90
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/timer_rate 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/hispeed_freq 1248000
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/io_is_busy 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/align_windows 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/target_loads "83 1804800:95"
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/min_sample_time 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/timer_slack 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/fastlane 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/blu_active/fastlane_threshold 50
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
+
+    # Configure governor settings for big cluster
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor "blu_active"
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/above_hispeed_delay 20000
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/go_hispeed_load 90
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/timer_rate 20000
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/hispeed_freq 1574400
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/io_is_busy 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/align_windows 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/target_loads "83 1939200:90 2016000:95"
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/min_sample_time 20000
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/timer_slack 20000
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/fastlane 1
+    write /sys/devices/system/cpu/cpu4/cpufreq/blu_active/fastlane_threshold 50
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 300000
+
+    # Re-enable thermal hotplug
+    write /sys/module/msm_thermal/core_control/enabled 1
+    write /sys/devices/soc/soc:qcom,bcl/mode "disable"
+    write /sys/devices/soc/soc:qcom,bcl/hotplug_mask 0
+    write /sys/devices/soc/soc:qcom,bcl/hotplug_soc_mask 0
+    write /sys/devices/soc/soc:qcom,bcl/mode "enable"
+
+	write /dev/kmsg "Boot blu_spark completed "

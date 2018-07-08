@@ -1,4 +1,5 @@
 import /init.recovery.qcom_decrypt.rc
+import /init.blu_spark.rc
 
 on early-init
     mkdir /firmware 0771 system system
