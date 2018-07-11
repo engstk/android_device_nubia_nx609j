@@ -67,7 +67,7 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3758096384
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 121497399296
 BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
-BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
+BOARD_FLASH_BLOCK_SIZE := 262144
 
 # Workaround for error copying vendor files to recovery ramdisk
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -98,18 +98,8 @@ TARGET_RECOVERY_DEVICE_MODULES := tzdata hwservicemanager ld-android android.hid
 TW_RECOVERY_ADDITIONAL_RELINK_FILES := $(OUT)/system/usr/share/zoneinfo/tzdata $(OUT)/system/bin/hwservicemanager $(OUT)/system/lib64/ld-android.so $(OUT)/system/lib64/android.hidl.base@1.0.so
 
 # Additional modules and relink files for resetprop
-TARGET_RECOVERY_DEVICE_MODULES += libsqlite libicuuc libicui18n
-TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(OUT)/system/lib64/libsqlite.so $(OUT)/system/lib64/libicuuc.so $(OUT)/system/lib64/libicui18n.so
+TARGET_RECOVERY_DEVICE_MODULES += libicuuc libicui18n libsqlite
+TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(OUT)/system/lib64/libicuuc.so $(OUT)/system/lib64/libicui18n.so $(OUT)/system/lib64/libsqlite.so
 
-# TWRP Debug Flags
-#TWRP_EVENT_LOGGING := true
-#TARGET_USES_LOGD := true
-#TWRP_INCLUDE_LOGCAT := true
-#TARGET_RECOVERY_DEVICE_MODULES += debuggerd
-#TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(OUT)/system/bin/debuggerd
-#TARGET_RECOVERY_DEVICE_MODULES += strace
-#TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(OUT)/system/xbin/strace
-#TW_CRYPTO_SYSTEM_VOLD_DEBUG := true
-#TARGET_RECOVERY_DEVICE_MODULES += twrpdec
-#TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(OUT)/recovery/root/sbin/twrpdec
-#TARGET_RECOVERY_DEVICE_MODULES += dump_footer
+# Extras
+BOARD_SUPPRESS_SECURE_ERASE := true

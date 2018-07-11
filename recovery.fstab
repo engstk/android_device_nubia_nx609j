@@ -9,7 +9,7 @@
 /system_image   emmc        /dev/block/bootdevice/by-name/system
 /vendor_image   emmc        /dev/block/bootdevice/by-name/vendor
 /parameter      emmc        /dev/block/bootdevice/by-name/parameter
-/persist        ext4        /dev/block/bootdevice/by-name/persist			flags=display="Persist"
+#/persist        ext4        /dev/block/bootdevice/by-name/persist			flags=display="Persist"
 /modem          vfat        /dev/block/bootdevice/by-name/modem             flags=display="Modem";mounttodecrypt;fsflags=ro
 
 /efs1           emmc        /dev/block/bootdevice/by-name/modemst1          flags=backup=1;wipeingui;display=EFS
