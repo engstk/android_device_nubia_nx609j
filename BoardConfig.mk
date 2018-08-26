@@ -92,7 +92,6 @@ TW_IGNORE_MISC_WIPE_DATA := true
 TW_INCLUDE_CRYPTO := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_NEW_ION_HEAP := true
-TW_NO_SCREEN_TIMEOUT := true
 TW_NO_USB_STORAGE := true
 TARGET_RECOVERY_DEVICE_MODULES := tzdata hwservicemanager ld-android android.hidl.base@1.0
 TW_RECOVERY_ADDITIONAL_RELINK_FILES := $(OUT)/system/usr/share/zoneinfo/tzdata $(OUT)/system/bin/hwservicemanager $(OUT)/system/lib64/ld-android.so $(OUT)/system/lib64/android.hidl.base@1.0.so
